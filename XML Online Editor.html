@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>XML Editor</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+nimod {display: block;}
+.thing {
+  padding: 1rem;
+  box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11),
+0 5px 15px 0 rgba(0,0,0,0.08);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  height:600px;
+  border-left: 0 solid #00ff99;
+  transition: border-left 3ms ease-in-out, padding-left 3ms ease-in-out;
+}
+
+.thing:hover {
+  padding-left: 0.5rem;
+  border-left: 0.5rem solid #00ff99;
+}
+
+.thing > :first-child {
+  margin-top: 0;
+}
+
+.thing > :last-child {
+  margin-bottom: 0;
+}
+
+.heading {
+  color: #fff;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0099ff;
+}
+
+Rahul{display: block;font-size:60px;}
+
+pre{display: block;font-size:30px;}
+
+  </style>
+</head>
+<body>
+<div class="container">
+<button type="button" class="btn btn-default" id="bold">Bold</button>
+<button type="button" class="btn btn-default" id="italic">Italic</button>
+<button type="button" class="btn btn-default" id="subscript">subscript</button>
+<button type="button" class="btn btn-default" id="superscript">superscript</button>
+<button type="button" class="btn btn-default" id="strikethrough">strikethrough</button>
+<button type="button" class="btn btn-default" id="undo">Undo</button>
+<button type="button" class="btn btn-default" id="redo">Redo</button>
+<button type="button" class="btn btn-default" id="backColor">BackColor</button>
+<button type="button" class="btn btn-default" id="selectAll">SelectAll</button>
+<button type="button" class="btn btn-default" id="cut">Cut</button>
+<button type="button" class="btn btn-default" id="copy">Copy</button>
+<button type="button" class="btn btn-default" id="paste">Paste</button>
+<button type="button" class="btn btn-default" id="delete">Delete</button>
+<button type="button" class="btn btn-default" id="insertParagraph">New Para</button>
+<button type="button" class="btn btn-default" id="insertOrderedList">List</button>
+<button type="button" class="btn btn-default" id="insertUnorderedList">Bullet List</button>
+<br/>
+<div id="editor" class="thing">
+<saai>
+<Rahul>Title Text</Rahul>
+<nimod>
+Some text 1
+</nimod>
+<nimod>
+Some text 2
+</nimod>
+<nimod>
+Some text 3
+</nimod>
+</saai>
+</div>
+<input id="save" type="button" class="button button1" value="Save"/>
+</div>
+<h1 class="heading">Try Me 👆</h1>
+<pre>Ctrl + B for Bold | Ctrl + I for Italic | Ctrl + U for Underline | Ctrl + Z for Undo
+Ctrl + Y for Redo | Ctrl + C for Copy | Ctrl + V for Paste | Ctrl + X for Cut</pre>
+	<h2>For more commands:  <a href="https://www.w3schools.com/jsref/met_document_execcommand.asp">Check</a></h2>
+</body>
+<script>
+$(".thing *").attr("contenteditable","True");
+
+
+$('#save').click(function(){
+$(".thing *").removeAttr("contenteditable");
+alert($(".thing").html());
+$(".thing *").attr("contenteditable","True");
+});
+
+var box = document.getElementById('editor');
+    
+document.getElementById('bold').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('bold', false, null);
+});
+
+document.getElementById('italic').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('italic', false, null);
+});
+
+document.getElementById('undo').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('undo', false, null);
+});
+
+document.getElementById('redo').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('redo', false, null);
+});
+
+document.getElementById('insertOrderedList').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('insertOrderedList', false, null);
+});
+
+document.getElementById('backColor').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('backColor',false,"#ffaa1d");
+});
+
+document.getElementById('copy').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('copy', false, null);
+});
+
+document.getElementById('cut').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('cut', false, null);
+});
+
+document.getElementById('delete').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('delete', false, null);
+});
+
+document.getElementById('insertParagraph').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('insertParagraph', false, null);
+});
+
+document.getElementById('insertUnorderedList').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('insertUnorderedList', false, null);
+});
+
+document.getElementById('paste').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('paste');
+});
+
+
+
+document.getElementById('selectAll').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('selectAll', false, null);
+});
+
+document.getElementById('subscript').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('subscript', false, null);
+});
+
+document.getElementById('superscript').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('superscript', false, null);
+});
+
+document.getElementById('strikethrough').addEventListener('click', function (e) {
+box.focus(); 
+document.execCommand('strikethrough', false, null);
+});
+</script>
+</HTML>
+
+
