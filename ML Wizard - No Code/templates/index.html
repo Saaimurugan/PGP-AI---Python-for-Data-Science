@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Machine Learning Wizard - No coding skills needed</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.1/css/scroller.dataTables.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.1/js/dataTables.scroller.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <img src="static\SaaiHead.gif"/>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">Import</a></li>
+    <li><a href="#">Clean Up</a></li>
+    <li><a href="#">Feature Selection</a></li>
+    <li><a href="#">Outliers</a></li>
+    <li><a href="#">Feature Enginering</a></li>
+    <li><a href="#">Model Selection</a></li>
+    <li><a href="#">Predict</a></li>
+    <li><a href="#">Export Model</a></li>  
+</ul>
+<div>
+  {% block code %}{% endblock %}
+</div>
+</div>
+
+<script>
+    $( document ).ready(function() {
+        $('li').click(function() {
+            $("[class='active']").removeClass();
+            $(this).toggleClass('active');
+        });
+    });
+    
+</script>
+<script type="text/javascript">
+  $('table').addClass('table');
+
+  $(document).ready(function(){
+    
+    $('.Dataset').next('table').attr("id", "example")
+      /*$('.Dataset').next('table').DataTable({
+         "pageLength": 10
+    });*/
+
+    $(document).ready(function(){  
+      $(".stuff").slideUp();
+      $(".stuff:first").slideDown();
+
+      $(".menu").click(function(){  
+      $(".stuff").slideUp();
+      $(this).next().slideToggle();
+     });
+    });  
+    });
+
+  </script>
+</body>
+</html>  
