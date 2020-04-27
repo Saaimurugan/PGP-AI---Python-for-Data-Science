@@ -1,0 +1,141 @@
+{% extends "index.html" %}
+
+{% block code %}
+    <br/>
+<p>File uploaded successfully</p>
+<h2 class="menu">Dataset</h2> 
+<div class="stuff">
+<h3>Change the headers</h3> 
+
+<form action = "/update" method = "GET" enctype="multipart/form-data" class="headform"> 
+
+{% for i in range(name.shape[1]) %}
+<input class="head" type="text" name="{{i}}" id="col{{i}}" value="{% if name.columns[i] == ''%}Column {{i}}{% else %}{{name.columns[i]}}{% endif %}"/>
+{% endfor %}
+<div>
+<input type="text" name="filename" value="{{filename}}" style="display: none;"/>
+<input class="heads" type="text" name="heads" value="" style="display: none;"/>
+<input class="addheads" id="hiddencheck" type="hidden" name="addheads" value="0"/>
+<input type="text" name="Task" value="UpdateHead" style="display: none;"/>
+<div style="text-align: end;">
+<input class="addheads" type="checkbox" name="addheads" value="1"> Add Heads</input>
+<input type="submit" value="Update"/>
+</div>
+</div>
+</form> 
+<!--{{name.to_html()|safe}}-->
+<p class="Dataset">
+    <table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                {% for i in range(name.shape[1]) %}
+                <th>{{name.columns[i]}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
+
+    </p>
+</div>
+<h2 class="menu">Describe Dataset</h2> 
+<div class="stuff">
+    {{name.describe().to_html()|safe}}
+
+
+<p><a href="https://www.youtube.com/watch?v=MaTAhxRsshE">How to use the above information.</a></p>
+</div>
+<h2 class="menu">Validate Dataset</h2> 
+<div class="stuff">
+<h3>Null Validation</h3> 
+<p>{{name.isnull().sum().to_frame('nulls').to_html()|safe}}</p> 
+<table>
+{% for i in range(name.shape[1]) %}
+{% if name.isnull().sum().to_frame('nulls').iloc[i]['nulls'] != 0 %}
+<tr>
+<td>{{name.columns[i]}}</td>
+<td>{{name.isnull().sum().to_frame('nulls').iloc[i]['nulls']}}</td>
+<td>
+    <form action = "/update" method = "GET" enctype="multipart/form-data" class="headform"> 
+    <input type="text" name="Task" value="UpdateNull" style="display: none;"/>
+    <input type="text" name="Column" value="{{name.columns[i]}}" style="display: none;"/>
+    <input type="text" name="filename" value="{{filename}}" style="display: none;"/>
+    <select type="text" name="change" id="{{name.columns[i]}}">
+        {% if name[name.columns[i]].dtype.kind in 'biufc' %}
+    <optgroup label="Mean">
+      <option value="{{name[name.columns[i]].mean()}}">{{name[name.columns[i]].mean()}}</option>
+    </optgroup>
+    <optgroup label="Median">
+      <option value="{{name[name.columns[i]].median()}}">{{name[name.columns[i]].median()}}</option>
+      <optgroup label="Mode">
+        {% for item in name[name.columns[i]].mode() %}
+        <option value="{{item}}">{{item}}</option>
+        {% endfor %}
+        {% endif %}
+
+        <optgroup label="Other">
+            <option value="Key Data">Remove abservations</option>
+            <option value="Pattern">Replace with</option>
+    </optgroup>
+  </select>
+  <input type="submit" value="Update"/>
+  </form>
+</td>
+</tr>
+{% endif %}
+{% endfor %}
+</table>
+<h3>Simular Data Check</h3> 
+{% for i in range(name.shape[1]) %}
+<h4>{{name.columns[i]}}</h4>
+<div style="column-count: 4;column-gap: 40px;">
+{% for item in name[name.columns[i]].unique() %}
+
+<input type="checkbox" value="{{ item }}"/>
+{{ item }}<br/>
+
+{% endfor %}
+</div>
+{% if name[name.columns[i]].nunique() == name.shape[1] %}
+    <td>Column with same value</td>
+{% endif %}<br/>
+<input type="button" value="Merge"/>
+<input type="button" value="Replace"/>
+
+<input type="button" value="Remove Feature"/>
+{% endfor %}
+
+</div>
+<script>
+$('.headform').submit(function() {
+    event.preventDefault();
+    concatHeads = "";
+    $(".head").each(function(){
+        concatHeads = concatHeads+$(this).val()+"|";
+    });
+
+    $(".heads").val(concatHeads);
+
+
+    if($(".addheads").is(':checked'))
+    {
+        $("#hiddencheck").remove(); // checked
+    }
+
+    $(this).unbind('submit').submit();
+  });
+
+  $(document).ready(function() {
+        var data = {{name.to_json(orient='values')|safe}};
+         
+        $('#example').DataTable( {
+            data:           data,
+            deferRender:    true,
+            scrollY:        200,
+            scrollCollapse: true,
+            scroller:       true
+        } );
+    } );
+</script>
+{% endblock %}
+
+
