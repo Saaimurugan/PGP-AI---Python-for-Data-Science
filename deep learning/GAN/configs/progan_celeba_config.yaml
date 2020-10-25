@@ -1,0 +1,32 @@
+data:
+  input_shape: [218, 178, 3]
+  z_size: 128
+  buffer_size: 50000
+  num_blocks: 6
+model:
+  generator:
+    filters: 128
+    n_channels: 3
+    leaky_relu_slope: 0.2
+    learning_rate: 0.001
+    beta_1: 0
+    beta_2: 0.99
+    epsilon: 0.0000001
+  discriminator:
+    input_shape: [4, 4, 3]
+    filters: 128
+    num_input_layers: 3
+    leaky_relu_slope: 0.2
+    learning_rate: 0.001
+    beta_1: 0
+    beta_2: 0.99
+    epsilon: 0.0000001
+    clip_threshold: 0.01
+training:
+  nb_epochs: [5, 8, 8, 10, 10, 10]
+  batch_size: 128
+  # how often to save model checkpoint
+  checkpoint_steps: 1000
+  checkpoints_to_keep: 5
+  # how many examples to display during training
+  plot_sample_size: 16
